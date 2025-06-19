@@ -38,16 +38,6 @@ import yfinance as yf
 from functools import reduce
 st.set_page_config(page_title='Ledgr | Optimization Engine', layout="wide")
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17050636689"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'AW-17050636689');
-</script>
-
 direc = os.getcwd()
 # direc = f'{direc}/Documents/Ledgr'
 bpath = f'{direc}/pages'
