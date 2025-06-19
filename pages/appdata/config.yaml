@@ -1,0 +1,25 @@
+credentials:
+  usernames:
+    r_xn:
+      email: r_xn@alphaledgr.com
+      name: Riju Sengupta
+      password: abc # To be replaced with hashed password
+    s_sengupta:
+      email: s_sengupta@alphaledgr.com
+      name: Sibani Sengupta
+      password: def # To be replaced with hashed password
+    arnab_1:
+      email: arnab@mestastop.com
+      name: Dr Arnab Dasgupta
+      password: ghi # To be replaced with hashed password
+    p_sengupta:
+      email: prithvirajsengupta095@gmail.com
+      name: Prithviraj Sengupta
+      password: jkl # To be replaced with hashed password
+cookie:
+  expiry_days: 30
+  key: random_signature_key # Must be string
+  name: random_cookie_name
+preauthorized:
+  emails:
+  - r_xn@alphaledgr.com

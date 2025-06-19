@@ -1,0 +1,5 @@
+runtime: custom
+env: flex
+entrypoint: streamlit run Home.py --server.port=$PORT
+
+

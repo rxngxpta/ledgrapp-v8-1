@@ -1,0 +1,15 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0.4
+Name=LedgrApp
+Comment=Ledgr is a smart, bespoke, user-centric, smart Strategic Financial Analyses Platform.
+Path=/home/r_xn/Documents/Ledgr/ledgr-v1/
+Icon=/home/r_xn/Documents/Ledgr/ledgr-v1/pages/appdata/imgs/Ledgr_Logo_F2.png
+Exec=streamlit run Home.py
+
+Terminal=true
+Type=Application
+Categories=Utility;Development;
+GenericName=LedgrApp_Beta_2
+StartupNotify=true
