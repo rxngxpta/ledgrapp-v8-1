@@ -28,6 +28,18 @@ import streamlit as st
 st.set_page_config(page_title='LedgrBase | Your Asset Dossier',
                    layout="wide", initial_sidebar_state="expanded")
 # ##################################################################
+
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17050636689"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-17050636689');
+</script>
+
 direc = os.getcwd()
 # st.write(direc)
 # direc = f'{direc}/Documents/Ledgr'
