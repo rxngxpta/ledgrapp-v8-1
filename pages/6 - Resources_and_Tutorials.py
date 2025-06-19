@@ -21,6 +21,15 @@ from streamlit_pdf_viewer import pdf_viewer
 
 st.set_page_config(page_title='Ledgr | About & Tutorials', layout="wide",
                    initial_sidebar_state="expanded")
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17050636689"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-17050636689');
+</script>
 direc = os.getcwd()
 logofile = f'{direc}/pages/appdata/imgs/Ledgr_Logo_F2.png'
 
