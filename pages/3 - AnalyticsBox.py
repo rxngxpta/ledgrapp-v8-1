@@ -30,15 +30,7 @@ direc = os.getcwd()
 st.set_page_config(page_title='Ledgr | Analytics', layout="wide",
                    initial_sidebar_state="expanded")
 # logofile2 = f"{direc}/pages/appdata/imgs/Ledgr_Logo_F1.png"
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17050636689"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'AW-17050636689');
-</script>
 pathtkr = f"{direc}/pages/appdata/tickerlist_y.csv"
 # Icons and Links ###########################
 ytube = f'{direc}/pages/appdata/imgs/ytube.svg'
