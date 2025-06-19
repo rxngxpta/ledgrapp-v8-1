@@ -14,6 +14,19 @@ from yaml.loader import SafeLoader
 import os
 import streamlit as st
 
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17050636689"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-17050636689');
+</script>
+
+
+
+
 st.set_page_config(page_title="Home | Ledgr", page_icon=None,
                    layout="centered", initial_sidebar_state="expanded")
 direc = os.getcwd()
