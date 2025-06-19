@@ -16,15 +16,7 @@ sns.set()
 plt.style.use('fivethirtyeight')
 st.set_page_config(page_title='Ledgr | Valuation & Pricing Models',
                    layout="wide", initial_sidebar_state="expanded")
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17050636689"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'AW-17050636689');
-</script>
 direc = os.getcwd()
 # Declarations ################################################################
 logofile = f'{direc}/pages/appdata/imgs/Ledgr_Logo_F2.png'
