@@ -89,78 +89,81 @@ with st.form("uinputs"):
 stock = st.selectbox("Please Select a Security Symbol", tickerlist)
 submitted = st.form_submit_button("Proceed")
 if submitted:
-    df = getdata(stock)
-
-    ind = df.index
-    ind = ind.tz_localize(None)
-    open = df['Open']
-    hi = df['High']
-    lo = df['Low']
-    close = df['Close']
-    prof_df_close = pd.DataFrame({"ds": ind, "y": close})
-    prof_df_close = prof_df_close.set_index(['ds'])
-    # st.write(prof_df_close)
-    prof_df_close = prof_df_close.reset_index()
-    st.write(prof_df_close)
-            # Pagework 2 - Forecasting  ###################################################
-
-    m = Prophet()
-
-    m.fit(prof_df_close)
-    future_year = m.make_future_dataframe(periods=365)
-
-    forecast_year = m.predict(future_year)
-    fig1 = m.plot(forecast_year)
-    fig2 = m.plot_components(forecast_year)
-    st.plotly_chart(fig1)
-    st.plotly_chart(fig2)
-    a = plot_plotly(m, forecast_year)
-    a.update_xaxes(title="Timeline", visible=True, showticklabels=True)
-    a.update_yaxes(title="Predicted Prices (INR)", visible=True,
-                   showticklabels=True)
-    a.update_traces(marker_color="green", selector=dict(mode='markers'))
-    b = plot_components_plotly(m, forecast_year)
-    b.update_xaxes(title="Timeline", visible=True, showticklabels=True)
-    b.update_yaxes(title="Predicted Prices (INR)", visible=True,
-                   showticklabels=True)
-    dx = forecast_year.filter(["ds", 'yhat'], axis=1)
-    dx = dx.set_index(['ds'])
-    dx.rename(columns={'yhat': 'Predictions'}, inplace=True)
-    c = px.line(dx)
-    c.add_trace(go.Scatter(x=dx.index, y=df['Close'], name='Close'))
-    c.update_xaxes(title='Timeline', showticklabels=True, visible=True)
-    c.update_yaxes(title="Price Data", showticklabels=True, visible=True)
-    c.update_layout(legend=dict(
-        orientation="h",
-        entrywidth=100,
-        yanchor="bottom",
-        y=1.02,
-        xanchor="right", x=1
-        ))
-    st.write("  ---------------------------------------------------------------  ")
-    k1, k2, k3 = st.columns([4, 3, 4])
-    with k1:
-        st.write(" ")
-    with k2:
-        st.subheader("Forecast Plots")
-    with k3:
-        st.write(" ")
-    st.info("""The Real Prices are scattered with the forecast line fit over them.""")
-    st.plotly_chart(a, use_container_width=True)
-    with st.expander("Get Forecast Data Here!"):
-      st.write(forecast_year.iloc[-100:])
+    pass
     
-  st.info("""The Closing Prices and the Predictions are plot identically as linear plots for comparison.""")
-  st.plotly_chart(c, use_container_width=True)
+    
+df = getdata(stock)
+
+ind = df.index
+ind = ind.tz_localize(None)
+open = df['Open']
+hi = df['High']
+lo = df['Low']
+close = df['Close']
+prof_df_close = pd.DataFrame({"ds": ind, "y": close})
+prof_df_close = prof_df_close.set_index(['ds'])
+# st.write(prof_df_close)
+prof_df_close = prof_df_close.reset_index()
+st.write(prof_df_close)
+# Pagework 2 - Forecasting  ###################################################
+
+m = Prophet()
+
+m.fit(prof_df_close)
+future_year = m.make_future_dataframe(periods=365)
+
+forecast_year = m.predict(future_year)
+fig1 = m.plot(forecast_year)
+fig2 = m.plot_components(forecast_year)
+st.plotly_chart(fig1)
+st.plotly_chart(fig2)
+a = plot_plotly(m, forecast_year)
+a.update_xaxes(title="Timeline", visible=True, showticklabels=True)
+a.update_yaxes(title="Predicted Prices (INR)", visible=True,
+               showticklabels=True)
+a.update_traces(marker_color="green", selector=dict(mode='markers'))
+b = plot_components_plotly(m, forecast_year)
+b.update_xaxes(title="Timeline", visible=True, showticklabels=True)
+b.update_yaxes(title="Predicted Prices (INR)", visible=True,
+               showticklabels=True)
+dx = forecast_year.filter(["ds", 'yhat'], axis=1)
+dx = dx.set_index(['ds'])
+dx.rename(columns={'yhat': 'Predictions'}, inplace=True)
+c = px.line(dx)
+c.add_trace(go.Scatter(x=dx.index, y=df['Close'], name='Close'))
+c.update_xaxes(title='Timeline', showticklabels=True, visible=True)
+c.update_yaxes(title="Price Data", showticklabels=True, visible=True)
+c.update_layout(legend=dict(
+    orientation="h",
+    entrywidth=100,
+    yanchor="bottom",
+    y=1.02,
+    xanchor="right", x=1
+    ))
+st.write("  ---------------------------------------------------------------  ")
+k1, k2, k3 = st.columns([4, 3, 4])
+with k1:
+    st.write(" ")
+with k2:
+    st.subheader("Forecast Plots")
+with k3:
+    st.write(" ")
+st.info("""The Real Prices are scattered with the forecast line fit over them.""")
+st.plotly_chart(a, use_container_width=True)
+with st.expander("Get Forecast Data Here!"):
+  st.write(forecast_year.iloc[-100:])
+
+st.info("""The Closing Prices and the Predictions are plot identically as linear plots for comparison.""")
+st.plotly_chart(c, use_container_width=True)
 
 
-    j1, j2, j3 = st.columns([3, 6, 3])
-    with j1:
-        st.write(" ")
-    with j2:
-        st.subheader(f"{stock} Price Trajectory")
-    with j3:
-        st.write(" ")
+j1, j2, j3 = st.columns([3, 6, 3])
+with j1:
+    st.write(" ")
+with j2:
+    st.subheader(f"{stock} Price Trajectory")
+with j3:
+    st.write(" ")
 
    st.info(f"Track the Price Trajectory of {stock} a particular time scale based on historical data, over years, months and weeks")
    st.plotly_chart(b, use_container_width=True)
