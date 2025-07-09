@@ -124,6 +124,7 @@ with st.form(key='Input Assset Info', clear_on_submit=False,
                                          y=data['Inv_Ret'], deg=1)
             st.write('\n')
             st.write(20*'==')
+            st.write("Beta is the metric which uses one index or security as a reference, and measures the digression of the chosen security's performance relative to the reference index.") 
             st.metric('Calculated Beta - Linear Regression: ', round(beta_reg, 6))
             st.metric('Calculated Alpha: ', round(alpha, 6))
             st.write(20*'==')
