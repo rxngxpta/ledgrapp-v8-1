@@ -16,10 +16,10 @@ import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
 import yfinance as yf
-# import matplotlib as plt
+import matplotlib.pyplot as plt
 # import seaborn as sns
-#from prophet import Prophet
-#from prophet.plot import plot_plotly, plot_components_plotly
+from prophet import Prophet
+from prophet.plot import plot_plotly, plot_components_plotly
 import os
 # Page Setup ##################################################################
 st.set_page_config(page_title='Ledgr | Forecasting Engine',
