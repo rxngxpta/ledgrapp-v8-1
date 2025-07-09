@@ -21,6 +21,7 @@ import yfinance as yf
 from prophet import Prophet
 from prophet.plot import plot_plotly, plot_components_plotly
 import os
+from holidays.financial import Entity
 # Page Setup ##################################################################
 st.set_page_config(page_title='Ledgr | Forecasting Engine',
                    layout="wide", initial_sidebar_state="expanded")
