@@ -364,7 +364,7 @@ except Exception:
 
 
 try:
-    interest_expenses = pnl2.loc['Interest Expenses'][0]
+    interest_expenses = pnl2.loc['Interest Expense'][0]
 except Exception:
     interest_expenses = pnl2.loc['Interest Expense Non Operating'][0]
 else:
