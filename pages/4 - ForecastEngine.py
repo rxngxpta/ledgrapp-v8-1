@@ -167,8 +167,8 @@ with j2:
   st.subheader(f"{stock} Price Trajectory")
 with j3:
   st.write(" ")
-st.info(f"Track the Price Trajectory of {stock} a particular time scale based on historical data, over years, months and weeks")
-st.plotly_chart(b, use_container_width=True)
+  st.info(f"Track the Price Trajectory of {stock} a particular time scale based on historical data, over years, months and weeks")
+  st.plotly_chart(b, use_container_width=True)
 #
 #st.write("  ---------------------------------------------------------------  ")
 
