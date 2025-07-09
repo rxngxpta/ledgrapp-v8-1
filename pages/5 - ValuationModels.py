@@ -80,11 +80,15 @@ with st.form(key='Input Assset Info', clear_on_submit=False,
                          ).iloc[0].iloc[1]
             beta_reg, alpha = np.polyfit(x=data['Markt_Ret'],
                                          y=data['Inv_Ret'], deg=1)
+            alpha = 100*alpha
             st.write('\n')
-            st.write(20*'==')
+            st.write(30*'==')
+            st.write("Beta [Monthly] is the metric which uses one index or security as a reference, measured on a monthly interval, indicates the digression of the chosen security's performance relative to the reference index.")
             st.metric('Calculated Beta - Linear Regression: ', round(beta_reg, 4))
+            st.write("Alpha [Monthly] is the metric which measures the price delta from a reference index within a period.") 
+
             st.metric('Calculated Alpha: ', round(alpha, 4))
-            st.write(20*'==')
+            st.write(30*'==')
             plt.figure(figsize=(13, 9))
 
             plt.axvline(0, color='grey', alpha=0.5)
@@ -123,11 +127,13 @@ with st.form(key='Input Assset Info', clear_on_submit=False,
             beta_reg, alpha = np.polyfit(x=data['Markt_Ret'],
                                          y=data['Inv_Ret'], deg=1)
             st.write('\n')
-            st.write(20*'==')
-            st.write("Beta is the metric which uses one index or security as a reference, and measures the digression of the chosen security's performance relative to the reference index.") 
+            st.write(30*'==')
+            st.write("Beta [daily] is the metric which uses one index or security as a reference, measured on a monthly interval, indicates the digression of the chosen security's performance relative to the reference index.") 
             st.metric('Calculated Beta - Linear Regression: ', round(beta_reg, 6))
+            st.write("Alpha [daily] is the metric whichl measures the overall performance delta against a chosen index.")
+
             st.metric('Calculated Alpha: ', round(alpha, 6))
-            st.write(20*'==')
+            st.write(30*'==')
             plt.figure(figsize=(13, 9))
             plt.axvline(0, color='grey', alpha=0.5)
             plt.axhline(0, color='grey', alpha=0.5)
