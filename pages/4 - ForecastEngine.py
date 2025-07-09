@@ -46,17 +46,17 @@ tickerlist = tickerdb["SYMBOL"]
 
 @st.cache_data
 def getdata(stock):
-  
   stock = stock + ".NS"
   try:
-      df = yf.download(stock, period='max', interval='1d')
-      df = df.reset_index(['Open', 'High', 'Low', 'Close'])
+    
+    df = yf.download(stock, period='max', interval='1d')
+    df = df.reset_index(['Open', 'High', 'Low', 'Close'])
 
   except Exception:
-      stock = yf.Ticker(stock)
-      df = stock.history(period='max')
+    stock = yf.Ticker(stock)
+    df = stock.history(period='max')
   finally:
-      return df
+    return df
 
 # Pagework 1 - Inputs #########################################################
 
@@ -146,11 +146,11 @@ c.update_layout(legend=dict(
 st.write("  ---------------------------------------------------------------  ")
 k1, k2, k3 = st.columns([4, 3, 4])
 with k1:
-    st.write(" ")
+  st.write(" ")
 with k2:
-    st.subheader("Forecast Plots")
+  st.subheader("Forecast Plots")
 with k3:
-    st.write(" ")
+  st.write(" ")
 st.info("""The Real Prices are scattered with the forecast line fit over them.""")
 st.plotly_chart(a, use_container_width=True)
 with st.expander("Get Forecast Data Here!"):
@@ -162,43 +162,43 @@ st.plotly_chart(c, use_container_width=True)
 
 j1, j2, j3 = st.columns([3, 6, 3])
 with j1:
-    st.write(" ")
+  st.write(" ")
 with j2:
-    st.subheader(f"{stock} Price Trajectory")
+  st.subheader(f"{stock} Price Trajectory")
 with j3:
-    st.write(" ")
+  st.write(" ")
 
-   st.info(f"Track the Price Trajectory of {stock} a particular time scale based on historical data, over years, months and weeks")
-   st.plotly_chart(b, use_container_width=True)
+  st.info(f"Track the Price Trajectory of {stock} a particular time scale based on historical data, over years, months and weeks")
+  st.plotly_chart(b, use_container_width=True)
 #
 #st.write("  ---------------------------------------------------------------  ")
 
 c0, column1, column2, column3, column4, column5, c0a = st.columns([1, 1, 1, 1, 1, 1, 1])
 with c0:
- st.write(" ")
+  st.write(" ")
 with column1:
-    st.image(ytube, '[Ledgr\'s YouTube Channel](%s)' % url_ytube, width=60)
+  st.image(ytube, '[Ledgr\'s YouTube Channel](%s)' % url_ytube, width=60)
 with column2:
-    st.image(fbook, '[Our Meta Page ](%s)' % url_fb, width=60)
+  st.image(fbook, '[Our Meta Page ](%s)' % url_fb, width=60)
 with column3:
-    st.image(linkedin,  '[Ledgr @ LinkedIn](%s)' % url_linkedin, width=60)
+  st.image(linkedin,  '[Ledgr @ LinkedIn](%s)' % url_linkedin, width=60)
 with column4:
-    st.write(" ")
-    st.image(ledgrblog,  '[Ledgr\'s Blog ](%s)' % url_blog, width=85)
-    st.write(" ")
+  st.write(" ")
+  st.image(ledgrblog,  '[Ledgr\'s Blog ](%s)' % url_blog, width=85)
+  st.write(" ")
 with column5:
-    st.image(insta,  '[Ledgr @ Insta](%s)' % url_insta, width=60)
+  st.image(insta,  '[Ledgr @ Insta](%s)' % url_insta, width=60)
 with c0a:
-    st.write(" ")
+  st.write(" ")
 # # ###################################################################
 with st.container():
-    f9, f10, f11 = st.columns([2, 5, 1])
-    with f9:
-        st.write(" ")
-    with f10:
-        st.write(": 2025 - 2026 | All Rights Reserved  ©  Ledgr Inc.")
-        st.write(": alphaLedgr.com | alphaLedgr Technologies Ltd. :")
-    with f11:
-        st.write(" ")
+  f9, f10, f11 = st.columns([2, 5, 1])
+  with f9:
+    st.write(" ")
+  with f10:
+    st.write(": 2025 - 2026 | All Rights Reserved  ©  Ledgr Inc.")
+    st.write(": alphaLedgr.com | alphaLedgr Technologies Ltd. :")
+  with f11:
+    st.write(" ")
 
 
