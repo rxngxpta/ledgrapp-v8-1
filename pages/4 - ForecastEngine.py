@@ -16,7 +16,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
 import yfinance as yf
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 # import seaborn as sns
 from prophet import Prophet
 from prophet.plot import plot_plotly, plot_components_plotly
@@ -30,8 +30,9 @@ direc = os.getcwd()
 logofile = f'{direc}/pages/appdata/imgs/Ledgr_Logo_F2.png'
 
 with st.sidebar:
-    st.image(logofile, use_container_width=True)
-    st.caption("Select a stock, train the algorithm and predict scenarios.")
+  
+  st.image(logofile, use_container_width=True)
+  st.caption("Select a stock, train the algorithm and predict scenarios.")
 # Variables & Declarations ####################################################
 start_date = dt.datetime(2020, 1, 1)
 end_date = dt.datetime.today()
@@ -45,16 +46,17 @@ tickerlist = tickerdb["SYMBOL"]
 
 @st.cache_data
 def getdata(stock):
-    stock = stock + ".NS"
-    try:
-        df = yf.download(stock, period='max', interval='1d')
-        df = df.reset_index(['Open', 'High', 'Low', 'Close'])
+  
+  stock = stock + ".NS"
+  try:
+      df = yf.download(stock, period='max', interval='1d')
+      df = df.reset_index(['Open', 'High', 'Low', 'Close'])
 
-    except Exception:
-        stock = yf.Ticker(stock)
-        df = stock.history(period='max')
-    finally:
-        return df
+  except Exception:
+      stock = yf.Ticker(stock)
+      df = stock.history(period='max')
+  finally:
+      return df
 
 # Pagework 1 - Inputs #########################################################
 
@@ -75,10 +77,11 @@ st.write("  ---------------------------------------------------------------  ")
 
 fc1, fc2 = st.columns([2, 3])
 with fc1:
-    st.caption("Train Ledgr's AI Engines. Forecast Asset Prices.")
-    st.info("Chart behaviour, predict price-ranges, observe trajectories.")
+  
+  st.caption("Train Ledgr's AI Engines. Forecast Asset Prices.")
+  st.info("Chart behaviour, predict price-ranges, observe trajectories.")
 with fc2:
-    st.video('https://youtu.be/QVGy-AnBR4I?si=Y0gl5QwrR9AoE4ft')
+  st.video('https://youtu.be/QVGy-AnBR4I?si=Y0gl5QwrR9AoE4ft')
 st.write("    -----------------------------------------------------------    ")
 st.info(''' This page is under maintenance and further development. 
             Minor tweaks and some new features, from our end to you.
@@ -88,7 +91,8 @@ with st.form("uinputs"):
   stock = st.selectbox("Please Select a Security Symbol", tickerlist)
   submitted = st.form_submit_button("Proceed")
   if submitted:
-      pass
+    
+    pass
     
     
 df = getdata(stock)
@@ -103,7 +107,7 @@ prof_df_close = pd.DataFrame({"ds": ind, "y": close})
 prof_df_close = prof_df_close.set_index(['ds'])
 # st.write(prof_df_close)
 prof_df_close = prof_df_close.reset_index()
-st.write(prof_df_close)
+st.write(prof_df_close.tail())
 # Pagework 2 - Forecasting  ###################################################
 
 m = Prophet()
@@ -133,12 +137,12 @@ c.add_trace(go.Scatter(x=dx.index, y=df['Close'], name='Close'))
 c.update_xaxes(title='Timeline', showticklabels=True, visible=True)
 c.update_yaxes(title="Price Data", showticklabels=True, visible=True)
 c.update_layout(legend=dict(
-    orientation="h",
-    entrywidth=100,
-    yanchor="bottom",
-    y=1.02,
-    xanchor="right", x=1
-    ))
+  orientation="h",
+  entrywidth=100,
+  yanchor="bottom",
+  y=1.02,
+  xanchor="right", x=1
+  ))
 st.write("  ---------------------------------------------------------------  ")
 k1, k2, k3 = st.columns([4, 3, 4])
 with k1:
