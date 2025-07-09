@@ -85,10 +85,10 @@ st.info(''' This page is under maintenance and further development.
             Stay Tuned!!!''')
 
 with st.form("uinputs"):
-    stock = st.selectbox("Please Select a Security Symbol", tickerlist)
-    submitted = st.form_submit_button("Proceed")
-    if submitted:
-        pass
+  stock = st.selectbox("Please Select a Security Symbol", tickerlist)
+  submitted = st.form_submit_button("Proceed")
+  if submitted:
+      pass
     
     
 df = getdata(stock)
