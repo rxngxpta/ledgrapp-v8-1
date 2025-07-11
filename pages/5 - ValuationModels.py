@@ -134,7 +134,7 @@ with st.form(key='Input Assset Info', clear_on_submit=False,
         st.write("Beta [daily] is the metric which uses one index or security as a reference, measured on a monthly interval, indicates the digression of the chosen security's performance relative to the reference index.") 
         st.metric('Calculated Beta - Linear Regression: ', round(beta_reg, 6))
         st.write("Alpha [daily] is the metric which measures the overall performance delta against a chosen index.")
-
+        alpha = 100*alpha
         st.metric('Calculated Alpha: ', round(alpha, 6))
         st.write(25*'==')
         plt.figure(figsize=(13, 9))
