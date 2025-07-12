@@ -4,13 +4,13 @@ import pandas as pd
 import yfinance as yf
 # from streamlit_pdf_viewer import pdf_viewer
 import os
-#import matplotlib.pyplot as plt
-#import seaborn as sns
+import matplotlib.pyplot as plt
+import seaborn as sns
 # %matplotlib inline
 import streamlit as st
 import datetime as dt
-# import base64
-# import urllib
+import base64
+import urllib
 # Page Setup ##################################################################
 sns.set()
 plt.style.use('fivethirtyeight')
