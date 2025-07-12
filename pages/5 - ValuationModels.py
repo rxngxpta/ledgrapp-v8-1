@@ -49,18 +49,17 @@ with mx3:
     st.write(' ')
 
 
-with st.form(key='Input Assset Info', clear_on_submit=False,
-             enter_to_submit=True, border=True):
-              stock = st.selectbox("Choose Stock Ticker", tickerlist)
-              stock_m = st.selectbox('Choose the Base Index', stock_m_list)
-              slider_val = st.slider("Expected Volatility")
-            # Every form must have a submit button.
-              submitted = st.form_submit_button("Submit")
-              if not submitted:
-                  st.stop()
-              if submitted:
-                  stock_a = stock + ".NS"
-                pass
+with st.form(key='Input Assset Info'):
+  stock = st.selectbox("Choose Stock Ticker", tickerlist)
+  stock_m = st.selectbox('Choose the Base Index', stock_m_list)
+  slider_val = st.slider("Expected Volatility")
+# Every form must have a submit button.
+  submitted = st.form_submit_button("Submit")
+  if not submitted:
+      st.stop()
+  if submitted:
+      stock_a = stock + ".NS"
+    pass
 
 @st.cache_resource
 def CAPM(stock_a, stock_m):
