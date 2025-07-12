@@ -59,7 +59,7 @@ with st.form(key='Input Assset Info'):
       st.stop()
   if submitted:
       stock_a = stock + ".NS"
-    pass
+      pass
 
 @st.cache_resource
 def CAPM(stock_a, stock_m):
