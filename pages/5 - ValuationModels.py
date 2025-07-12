@@ -4,8 +4,8 @@ import pandas as pd
 import yfinance as yf
 # from streamlit_pdf_viewer import pdf_viewer
 import os
-import matplotlib.pyplot as plt
-import seaborn as sns
+#import matplotlib.pyplot as plt
+#import seaborn as sns
 # %matplotlib inline
 import streamlit as st
 import datetime as dt
@@ -51,7 +51,7 @@ with mx3:
 
 with st.form(key='Input Assset Info', clear_on_submit=False,
              enter_to_submit=True, border=True):
-               stock = st.selectbox("Choose Stock Ticker", tickerlist)
+              stock = st.selectbox("Choose Stock Ticker", tickerlist)
               stock_m = st.selectbox('Choose the Base Index', stock_m_list)
               slider_val = st.slider("Expected Volatility")
             # Every form must have a submit button.
@@ -62,101 +62,99 @@ with st.form(key='Input Assset Info', clear_on_submit=False,
                   stock_a = stock + ".NS"
                 pass
 
-    @st.cache_resource
-    def CAPM(stock_a, stock_m):
-        stock_a1 = yf.Ticker(stock_a)
-        stock_m1 = yf.Ticker(stock_m)
-        data_a = stock_a1.history(period='max')['Close']
-        data_m = stock_m1.history(period='max')['Close']
+@st.cache_resource
+def CAPM(stock_a, stock_m):
+    stock_a1 = yf.Ticker(stock_a)
+    stock_m1 = yf.Ticker(stock_m)
+    data_a = stock_a1.history(period='max')['Close']
+    data_m = stock_m1.history(period='max')['Close']
 
-        ME_stock_a = data_a.resample('ME').last()
-        ME_stock_m = data_m.resample('ME').last()
-        data = pd.DataFrame({'Inv_Close': ME_stock_a,
-                             'Markt_Close': ME_stock_m})
-        data[['Inv_Ret', 'Markt_Ret']] = np.log(
-            data[['Inv_Close',
-                  'Markt_Close']]/data[['Inv_Close',
-                                        'Markt_Close']].shift(1))
-        data.dropna(inplace=True)
-        beta_form = (data[['Inv_Ret',
-                           'Markt_Ret']].cov()/data['Markt_Ret'].var()
-                     ).iloc[0].iloc[1]
-        beta_reg, alpha = np.polyfit(x=data['Markt_Ret'],
-                                     y=data['Inv_Ret'], deg=1)
-        alpha = 100*alpha
-        st.write('\n')
-        st.write(25*'==')
-        st.write("Beta [Monthly] is the metric which uses one index or security as a reference, measured on a monthly interval, indicates the digression of the chosen security's performance relative to the reference index.")
-        st.metric('Calculated Beta - Linear Regression: ', round(beta_reg, 4))
-        st.write("Alpha [Monthly] is the metric which measures the price delta from a reference index within a period.") 
+    ME_stock_a = data_a.resample('ME').last()
+    ME_stock_m = data_m.resample('ME').last()
+    data = pd.DataFrame({'Inv_Close': ME_stock_a,
+                         'Markt_Close': ME_stock_m})
+    data[['Inv_Ret', 'Markt_Ret']] = np.log(
+        data[['Inv_Close',
+              'Markt_Close']]/data[['Inv_Close',
+                                    'Markt_Close']].shift(1))
+    data.dropna(inplace=True)
+    beta_form = (data[['Inv_Ret',
+                       'Markt_Ret']].cov()/data['Markt_Ret'].var()
+                 ).iloc[0].iloc[1]
+    beta_reg, alpha = np.polyfit(x=data['Markt_Ret'],
+                                 y=data['Inv_Ret'], deg=1)
+    alpha = 100*alpha
+    st.write('\n')
+    st.write(25*'==')
+    st.write("Beta [Monthly] is the metric which uses one index or security as a reference, measured on a monthly interval, indicates the digression of the chosen security's performance relative to the reference index.")
+    st.metric('Calculated Beta - Linear Regression: ', round(beta_reg, 4))
+    st.write("Alpha [Monthly] is the metric which measures the price delta from a reference index within a period.") 
 
-        st.metric('Calculated Alpha: ', round(alpha, 4))
-        st.write(25*'==')
-        plt.figure(figsize=(13, 9))
+    st.metric('Calculated Alpha: ', round(alpha, 4))
+    st.write(25*'==')
+    plt.figure(figsize=(13, 9))
 
-        plt.axvline(0, color='grey', alpha=0.5)
-        plt.axhline(0, color='grey', alpha=0.5)
+    plt.axvline(0, color='grey', alpha=0.5)
+    plt.axhline(0, color='grey', alpha=0.5)
 
-        sns.scatterplot(y='Inv_Ret', x='Markt_Ret',
-                        data=data, label='Returns')
-        sns.lineplot(x=data['Markt_Ret'],
-                     y=alpha + data['Markt_Ret']*beta_reg,
-                     color='red', label='CAPM Line')
+    sns.scatterplot(y='Inv_Ret', x='Markt_Ret',
+                    data=data, label='Returns')
+    sns.lineplot(x=data['Markt_Ret'],
+                 y=alpha + data['Markt_Ret']*beta_reg,
+                 color='red', label='CAPM Line')
 
-        plt.xlabel('Market Monthly Return: {}'.format(stock_m[0]))
-        plt.ylabel('Investment Monthly Return: {}'.format(stock_a[0]))
-        plt.legend(bbox_to_anchor=(1.01, 0.8), loc=2, borderaxespad=0.)
-        st.pyplot(plt)
+    plt.xlabel('Market Monthly Return: {}'.format(stock_m[0]))
+    plt.ylabel('Investment Monthly Return: {}'.format(stock_a[0]))
+    plt.legend(bbox_to_anchor=(1.01, 0.8), loc=2, borderaxespad=0.)
+    st.pyplot(plt)
 
 #        CAPM(stock_a, stock_m)
 
-    @st.cache_resource
-    def CAPM_daily(stock_a, stock_m):
-        stock_a1 = yf.Ticker(stock_a)
-        stock_m1 = yf.Ticker(stock_m)
-        data_a = stock_a1.history(period='max')['Close']
-        data_m = stock_m1.history(period='max')['Close']
-        # ME_stock_a = data_a.resample('ME').last()
-        # ME_stock_m = data_m.resample('ME').last()
-        data = pd.DataFrame({'Inv_Close': data_a, 'Markt_Close': data_m})
-        data[['Inv_Ret', 'Markt_Ret']] = np.log(
-            data[['Inv_Close',
-                  'Markt_Close']]/data[['Inv_Close',
-                                        'Markt_Close']].shift(1))
-        data.dropna(inplace=True)
-        beta_form = (data[['Inv_Ret',
-                           'Markt_Ret']].cov()/data['Markt_Ret'].var()
-                     ).iloc[0].iloc[1]
-        beta_reg, alpha = np.polyfit(x=data['Markt_Ret'],
-                                     y=data['Inv_Ret'], deg=1)
-        st.write('\n')
-        st.write(25*'==')
-        st.write("Beta [daily] is the metric which uses one index or security as a reference, measured on a monthly interval, indicates the digression of the chosen security's performance relative to the reference index.") 
-        st.metric('Calculated Beta - Linear Regression: ', round(beta_reg, 6))
-        st.write("Alpha [daily] is the metric which measures the overall performance delta against a chosen index.")
-        alpha = 100*alpha
-        st.metric('Calculated Alpha: ', round(alpha, 6))
-        st.write(25*'==')
-        plt.figure(figsize=(13, 9))
-        plt.axvline(0, color='grey', alpha=0.5)
-        plt.axhline(0, color='grey', alpha=0.5)
+@st.cache_resource
+def CAPM_daily(stock_a, stock_m):
+    stock_a1 = yf.Ticker(stock_a)
+    stock_m1 = yf.Ticker(stock_m)
+    data_a = stock_a1.history(period='max')['Close']
+    data_m = stock_m1.history(period='max')['Close']
+    # ME_stock_a = data_a.resample('ME').last()
+    # ME_stock_m = data_m.resample('ME').last()
+    data = pd.DataFrame({'Inv_Close': data_a, 'Markt_Close': data_m})
+    data[['Inv_Ret', 'Markt_Ret']] = np.log(
+        data[['Inv_Close',
+              'Markt_Close']]/data[['Inv_Close',
+                                    'Markt_Close']].shift(1))
+    data.dropna(inplace=True)
+    beta_form = (data[['Inv_Ret',
+                       'Markt_Ret']].cov()/data['Markt_Ret'].var()
+                 ).iloc[0].iloc[1]
+    beta_reg, alpha = np.polyfit(x=data['Markt_Ret'],
+                                 y=data['Inv_Ret'], deg=1)
+    st.write('\n')
+    st.write(25*'==')
+    st.write("Beta [daily] is the metric which uses one index or security as a reference, measured on a monthly interval, indicates the digression of the chosen security's performance relative to the reference index.") 
+    st.metric('Calculated Beta - Linear Regression: ', round(beta_reg, 6))
+    st.write("Alpha [daily] is the metric which measures the overall performance delta against a chosen index.")
+    alpha = 100*alpha
+    st.metric('Calculated Alpha: ', round(alpha, 6))
+    st.write(25*'==')
+    plt.figure(figsize=(13, 9))
+    plt.axvline(0, color='grey', alpha=0.5)
+    plt.axhline(0, color='grey', alpha=0.5)
 
-        sns.scatterplot(y='Inv_Ret',
-                        x='Markt_Ret',
-                        data=data, label='Returns')
-        sns.lineplot(x=data['Markt_Ret'],
-                     y=alpha + data['Markt_Ret']*beta_reg,
-                     color='red', label='CAPM Line')
+    sns.scatterplot(y='Inv_Ret',
+                    x='Markt_Ret',
+                    data=data, label='Returns')
+    sns.lineplot(x=data['Markt_Ret'],
+                 y=alpha + data['Markt_Ret']*beta_reg,
+                 color='red', label='CAPM Line')
 
-        plt.xlabel('Market Monthly Return: {}'.format(stock_m[0]))
-        plt.ylabel('Investment Monthly Return: {}'.format(stock_a[0]))
-        plt.legend(bbox_to_anchor=(1.01, 0.8), loc=2, borderaxespad=0.25)
-        st.pyplot(plt)
+    plt.xlabel('Market Monthly Return: {}'.format(stock_m[0]))
+    plt.ylabel('Investment Monthly Return: {}'.format(stock_a[0]))
+    plt.legend(bbox_to_anchor=(1.01, 0.8), loc=2, borderaxespad=0.25)
+    st.pyplot(plt)
 
 
 #        CAPM_daily(stock_a, stock_m)
-    pass
-
 
 
 st.header("Part1: Critical Asset Pricing Model")
