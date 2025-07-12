@@ -9,14 +9,13 @@ import seaborn as sns
 # %matplotlib inline
 import streamlit as st
 import datetime as dt
-import base64
-import urllib
+# import base64
+# import urllib
 # Page Setup ##################################################################
 sns.set()
 plt.style.use('fivethirtyeight')
 st.set_page_config(page_title='Ledgr | Valuation & Pricing Models',
                    layout="wide", initial_sidebar_state="expanded")
-
 direc = os.getcwd()
 # Declarations ################################################################
 logofile = f'{direc}/pages/appdata/imgs/Ledgr_Logo_F2.png'
@@ -29,7 +28,7 @@ ytube = f'{direc}/pages/appdata/imgs/ytube.svg'
 fbook = f'{direc}/pages/appdata/imgs/fbook.svg'
 insta = f'{direc}/pages/appdata/imgs/insta.svg'
 linkedin = f'{direc}/pages/appdata/imgs/linkedin.svg'
-ledgrblog = f'{direc}/pages/appdata/imgs/Ledgr_Logo_F1.png'
+ledgrblog = f'{direc}/pages/appdata/imgs/Ledgr_Logo_F2.png'
 tickerfile = f"{direc}/pages/appdata/tickerlist_y.csv"
 tickerdb = pd.read_csv(tickerfile)
 tickerlist = tickerdb["SYMBOL"]
@@ -48,120 +47,119 @@ with mx2:
 with mx3:
     st.write(' ')
 
-  @st.cache_resource
-    def CAPM(stock_a, stock_m):
-      stock_a1 = yf.Ticker(stock_a)
-      stock_m1 = yf.Ticker(stock_m)
-      data_a = stock_a1.history(period='max')['Close']
-      data_m = stock_m1.history(period='max')['Close']
-      
-      ME_stock_a = data_a.resample('ME').last()
-      ME_stock_m = data_m.resample('ME').last()
-      data = pd.DataFrame({'Inv_Close': ME_stock_a,
-                           'Markt_Close': ME_stock_m})
-      data[['Inv_Ret', 'Markt_Ret']] = np.log(
-          data[['Inv_Close',
-                'Markt_Close']]/data[['Inv_Close',
-                                      'Markt_Close']].shift(1))
-      data.dropna(inplace=True)
-      beta_form = (data[['Inv_Ret',
-                         'Markt_Ret']].cov()/data['Markt_Ret'].var()
-                   ).iloc[0].iloc[1]
-      beta_reg, alpha = np.polyfit(x=data['Markt_Ret'],
-                                   y=data['Inv_Ret'], deg=1)
-      alpha = 100*alpha
-      st.write('\n')
-      st.write(25*'==')
-      st.write("Beta [Monthly] is the metric which uses one index or security as a reference, measured on a monthly interval, indicates the digression of the chosen security's performance relative to the reference index.")
-      st.metric('Calculated Beta - Linear Regression: ', round(beta_reg, 4))
-      st.write("Alpha [Monthly] is the metric which measures the price delta from a reference index within a period.") 
-      
-      st.metric('Calculated Alpha: ', round(alpha, 4))
-      st.write(25*'==')
-      plt.figure(figsize=(13, 9))
-      
-      plt.axvline(0, color='grey', alpha=0.5)
-      plt.axhline(0, color='grey', alpha=0.5)
-      
-      sns.scatterplot(y='Inv_Ret', x='Markt_Ret',
-                      data=data, label='Returns')
-      sns.lineplot(x=data['Markt_Ret'],
-                   y=alpha + data['Markt_Ret']*beta_reg,
-                   color='red', label='CAPM Line')
-      
-      plt.xlabel('Market Monthly Return: {}'.format(stock_m[0]))
-      plt.ylabel('Investment Monthly Return: {}'.format(stock_a[0]))
-      plt.legend(bbox_to_anchor=(1.01, 0.8), loc=2, borderaxespad=0.)
-      st.pyplot(plt)
 
-      @st.cache_resource
-      def CAPM_daily(stock_a, stock_m):
-      stock_a1 = yf.Ticker(stock_a)
-      stock_m1 = yf.Ticker(stock_m)
-      data_a = stock_a1.history(period='max')['Close']
-      data_m = stock_m1.history(period='max')['Close']
-      # ME_stock_a = data_a.resample('ME').last()
-      # ME_stock_m = data_m.resample('ME').last()
-      data = pd.DataFrame({'Inv_Close': data_a, 'Markt_Close': data_m})
-      data[['Inv_Ret', 'Markt_Ret']] = np.log(
-          data[['Inv_Close',
-                'Markt_Close']]/data[['Inv_Close',
-                                      'Markt_Close']].shift(1))
-      data.dropna(inplace=True)
-      beta_form = (data[['Inv_Ret',
-                         'Markt_Ret']].cov()/data['Markt_Ret'].var()
-                   ).iloc[0].iloc[1]
-      beta_reg, alpha = np.polyfit(x=data['Markt_Ret'],
-                                   y=data['Inv_Ret'], deg=1)
-      st.write('\n')
-      st.write(25*'==')
-      st.write("Beta [daily] is the metric which uses one index or security as a reference, measured on a monthly interval, indicates the digression of the chosen security's performance relative to the reference index.") 
-      st.metric('Calculated Beta - Linear Regression: ', round(beta_reg, 6))
-      st.write("Alpha [daily] is the metric which measures the overall performance delta against a chosen index.")
-      alpha = 100*alpha
-      st.metric('Calculated Alpha: ', round(alpha, 6))
-      st.write(25*'==')
-      plt.figure(figsize=(13, 9))
-      plt.axvline(0, color='grey', alpha=0.5)
-      plt.axhline(0, color='grey', alpha=0.5)
-      
-      sns.scatterplot(y='Inv_Ret',
-                      x='Markt_Ret',
-                      data=data, label='Returns')
-      sns.lineplot(x=data['Markt_Ret'],
-                   y=alpha + data['Markt_Ret']*beta_reg,
-                   color='red', label='CAPM Line')
-      
-      plt.xlabel('Market Monthly Return: {}'.format(stock_m[0]))
-      plt.ylabel('Investment Monthly Return: {}'.format(stock_a[0]))
-      plt.legend(bbox_to_anchor=(1.01, 0.8), loc=2, borderaxespad=0.25)
-      st.pyplot(plt)
+with st.form(key='Input Assset Info', clear_on_submit=False,
+             enter_to_submit=True, border=True):
+    stock = st.selectbox("Choose Stock Ticker", tickerlist)
+    stock_m = st.selectbox('Choose the Base Index', stock_m_list)
+    slider_val = st.slider("Expected Volatility")
+    # Every form must have a submit button.
+    submitted = st.form_submit_button("Submit")
+    if submitted:
+        stock_a = stock + ".NS"
+
+        @st.cache_resource
+        def CAPM(stock_a, stock_m):
+            stock_a1 = yf.Ticker(stock_a)
+            stock_m1 = yf.Ticker(stock_m)
+            data_a = stock_a1.history(period='max')['Close']
+            data_m = stock_m1.history(period='max')['Close']
+
+            ME_stock_a = data_a.resample('ME').last()
+            ME_stock_m = data_m.resample('ME').last()
+            data = pd.DataFrame({'Inv_Close': ME_stock_a,
+                                 'Markt_Close': ME_stock_m})
+            data[['Inv_Ret', 'Markt_Ret']] = np.log(
+                data[['Inv_Close',
+                      'Markt_Close']]/data[['Inv_Close',
+                                            'Markt_Close']].shift(1))
+            data.dropna(inplace=True)
+            beta_form = (data[['Inv_Ret',
+                               'Markt_Ret']].cov()/data['Markt_Ret'].var()
+                         ).iloc[0].iloc[1]
+            beta_reg, alpha = np.polyfit(x=data['Markt_Ret'],
+                                         y=data['Inv_Ret'], deg=1)
+            st.write('\n')
+            st.write(20*'==')
+            st.metric('Calculated Beta - Linear Regression: ', round(beta_reg, 4))
+            st.metric('Calculated Alpha: ', round(alpha, 4))
+            st.write(20*'==')
+            plt.figure(figsize=(13, 9))
+
+            plt.axvline(0, color='grey', alpha=0.5)
+            plt.axhline(0, color='grey', alpha=0.5)
+
+            sns.scatterplot(y='Inv_Ret', x='Markt_Ret',
+                            data=data, label='Returns')
+            sns.lineplot(x=data['Markt_Ret'],
+                         y=alpha + data['Markt_Ret']*beta_reg,
+                         color='red', label='CAPM Line')
+
+            plt.xlabel('Market Monthly Return: {}'.format(stock_m[0]))
+            plt.ylabel('Investment Monthly Return: {}'.format(stock_a[0]))
+            plt.legend(bbox_to_anchor=(1.01, 0.8), loc=2, borderaxespad=0.)
+            st.pyplot(plt)
+
+#        CAPM(stock_a, stock_m)
+
+        @st.cache_resource
+        def CAPM_daily(stock_a, stock_m):
+            stock_a1 = yf.Ticker(stock_a)
+            stock_m1 = yf.Ticker(stock_m)
+            data_a = stock_a1.history(period='max')['Close']
+            data_m = stock_m1.history(period='max')['Close']
+            # ME_stock_a = data_a.resample('ME').last()
+            # ME_stock_m = data_m.resample('ME').last()
+            data = pd.DataFrame({'Inv_Close': data_a, 'Markt_Close': data_m})
+            data[['Inv_Ret', 'Markt_Ret']] = np.log(
+                data[['Inv_Close',
+                      'Markt_Close']]/data[['Inv_Close',
+                                            'Markt_Close']].shift(1))
+            data.dropna(inplace=True)
+            beta_form = (data[['Inv_Ret',
+                               'Markt_Ret']].cov()/data['Markt_Ret'].var()
+                         ).iloc[0].iloc[1]
+            beta_reg, alpha = np.polyfit(x=data['Markt_Ret'],
+                                         y=data['Inv_Ret'], deg=1)
+            st.write('\n')
+            st.write(20*'==')
+            st.metric('Calculated Beta - Linear Regression: ', round(beta_reg, 6))
+            st.metric('Calculated Alpha: ', round(alpha, 6))
+            st.write(20*'==')
+            plt.figure(figsize=(13, 9))
+            plt.axvline(0, color='grey', alpha=0.5)
+            plt.axhline(0, color='grey', alpha=0.5)
+
+            sns.scatterplot(y='Inv_Ret',
+                            x='Markt_Ret',
+                            data=data, label='Returns')
+            sns.lineplot(x=data['Markt_Ret'],
+                         y=alpha + data['Markt_Ret']*beta_reg,
+                         color='red', label='CAPM Line')
+
+            plt.xlabel('Market Monthly Return: {}'.format(stock_m[0]))
+            plt.ylabel('Investment Monthly Return: {}'.format(stock_a[0]))
+            plt.legend(bbox_to_anchor=(1.01, 0.8), loc=2, borderaxespad=0.25)
+            st.pyplot(plt)
 
 
-with st.form(key='Input Assset Info'):
-  stock = st.selectbox("Choose Stock Ticker", tickerlist)
-  stock_m = st.selectbox('Choose the Base Index', stock_m_list)
-  slider_val = st.slider("Expected Volatility")
-# Every form must have a submit button.
-  submitted = st.form_submit_button("Submit")
-  if submitted:
-    
-    stock_a = stock + ".NS"
-    pass
-    
-  
-  
-    
-    st.header("Part1: Critical Asset Pricing Model")
-    v11, v12 = st.columns([1, 1])
-    with v11:
-        st.subheader('1A. CAPM Plot: Monthly')
-        CAPM(stock_a, stock_m)
-    with v12:
-        st.subheader('1B. CAPM Plot: Daily')
-        CAPM_daily(stock_a, stock_m)
+#        CAPM_daily(stock_a, stock_m)
+        pass
+    if not submitted:
+        st.stop()
 
-st.subheader('Part II')
+
+st.header("Part1: Critical Asset Pricing Model")
+v11, v12 = st.columns([1, 1])
+with v11:
+    st.subheader('1A. CAPM Plot: Monthly')
+    CAPM(stock_a, stock_m)
+with v12:
+    st.subheader('1B. CAPM Plot: Daily')
+    CAPM_daily(stock_a, stock_m)
+
+st.write('------------------------------------------------------------------')
+# Part II #####################################################################
 ticker = yf.Ticker(stock_a)
 stock_price = ticker.history(period='1y')['Close'][1]
 # stock_price = stock_price.last()
@@ -248,7 +246,6 @@ except Exception:
 
 try:
    current_assets =   bsheet2.loc['Current Assets'][0]
-# mkt_price_per_share =
 except Exception:
    current_assets = cash + accounts_receivable + inventory
 
@@ -299,15 +296,16 @@ try:
 except Exception:
     net_income = "Data Unreported"
 try:
-    net_revenues = pnl2.loc['Normalized EBITDA'][0]
+    net_revenues = pnl2.loc['EBITDA'][0]
 except Exception:
-    net_revenues = "Data Unreported"
-
+    net_revenues = pnl2.loc['Normalized EBITDA'][0]
+else:
+    st.write("In the Pipeline")  
 try:
     op_rev = pnl2.loc['Operating Revenue'][0]
 except Exception:
     op_rev = "Data Unreported"
-
+    
 try:
     total_assets = pnl2.loc['Operating Revenue'][0]
 except Exception:
@@ -358,10 +356,8 @@ except Exception:
 
 
 try:
-    interest_expenses = pnl2.loc['Interest Expense'][0]
-except Exception:
     interest_expenses = pnl2.loc['Interest Expense Non Operating'][0]
-else:
+except Exception:
     interest_expenses = "Data Unreported"
 
 try:
@@ -442,6 +438,7 @@ except Exception:
 g2, g3 = st.columns(2)
 with g2:
     st.metric("Current Assets in Cr.", current_assets/10000000)
+    st.metric("Current Liabilities in Cr.", current_liabilities/10000000)
 with g3:
     st.metric("CR = (Current Assets) ÷ (Current Liabilities)", round(cr, 4))
 st.write("""A Firm with a CR less than one means that its Equity heavy and
@@ -757,31 +754,25 @@ with g45:
     st.metric("**=>DPR = Total Dividends/Net Income**", dpr)
 st.write("**=>DPR = Dividends per share/Earnings per share**")
 st.write('------------------------------------------------------------------')
-c0, column1, column2, column3, column4, column5, c0a = st.columns([1, 1, 1, 1, 1, 1, 1])
-with c0:
- st.write(" ")
+column1, column2, column3, column4, column5 = st.columns([1, 1, 1, 2 , 1])
 with column1:
-    st.image(ytube, '[Ledgr\'s YouTube Channel](%s)' % url_ytube, width=60)
+    st.image(ytube, '[Ledgr\'s YouTube Channel](%s)' % url_ytube)
 with column2:
-    st.image(fbook, '[Our Meta Page ](%s)' % url_fb, width=60)
+    st.image(fbook, '[Ledgr\'s FaceBook Page ](%s)' % url_fb)
 with column3:
-    st.image(linkedin,  '[Ledgr @ LinkedIn](%s)' % url_linkedin, width=60)
+    st.image(linkedin,  '[Our LinkedIn Page ](%s)' % url_linkedin)
 with column4:
     st.write(" ")
-    st.image(ledgrblog,  '[Ledgr\'s Blog ](%s)' % url_blog, width=85)
+    st.image(ledgrblog,  '[Ledgr\'s Blog ](%s)' % url_blog)
     st.write(" ")
 with column5:
-    st.image(insta,  '[Ledgr @ Insta](%s)' % url_insta, width=60)
-with c0a:
-    st.write(" ")
+    st.image(insta,  '[Ledgr\'s @ Instagram ](%s)' % url_insta)
 # # ###################################################################
 with st.container():
-    f9, f10, f11 = st.columns([2, 5, 1])
+    f9, f10, f11 = st.columns([1, 5, 1])
     with f9:
         st.write(" ")
     with f10:
-        st.write(": 2025 - 2026 | All Rights Reserved  ©  Ledgr Inc.")
-        st.write(": alphaLedgr.com | alphaLedgr Technologies Ltd. :")
+        st.caption(": | 2025 - 2026 | All Rights Resrved  ©  Ledgr Inc. | www.alphaLedgr.com | alphaLedgr Technologies Ltd. :")
     with f11:
         st.write(" ")
-
