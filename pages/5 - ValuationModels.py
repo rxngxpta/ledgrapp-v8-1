@@ -48,19 +48,7 @@ with mx2:
 with mx3:
     st.write(' ')
 
-
-with st.form(key='Input Assset Info'):
-  stock = st.selectbox("Choose Stock Ticker", tickerlist)
-  stock_m = st.selectbox('Choose the Base Index', stock_m_list)
-  slider_val = st.slider("Expected Volatility")
-# Every form must have a submit button.
-  submitted = st.form_submit_button("Submit")
-  if submitted:
-    
-    stock_a = stock + ".NS"
-    pass
-    
-    @st.cache_resource
+  @st.cache_resource
     def CAPM(stock_a, stock_m):
       stock_a1 = yf.Ticker(stock_a)
       stock_m1 = yf.Ticker(stock_m)
@@ -105,9 +93,7 @@ with st.form(key='Input Assset Info'):
       plt.ylabel('Investment Monthly Return: {}'.format(stock_a[0]))
       plt.legend(bbox_to_anchor=(1.01, 0.8), loc=2, borderaxespad=0.)
       st.pyplot(plt)
-      
-      #        CAPM(stock_a, stock_m)
-      
+
       @st.cache_resource
       def CAPM_daily(stock_a, stock_m):
       stock_a1 = yf.Ticker(stock_a)
@@ -150,9 +136,20 @@ with st.form(key='Input Assset Info'):
       plt.ylabel('Investment Monthly Return: {}'.format(stock_a[0]))
       plt.legend(bbox_to_anchor=(1.01, 0.8), loc=2, borderaxespad=0.25)
       st.pyplot(plt)
-      
-      
-      #        CAPM_daily(stock_a, stock_m)
+
+
+with st.form(key='Input Assset Info'):
+  stock = st.selectbox("Choose Stock Ticker", tickerlist)
+  stock_m = st.selectbox('Choose the Base Index', stock_m_list)
+  slider_val = st.slider("Expected Volatility")
+# Every form must have a submit button.
+  submitted = st.form_submit_button("Submit")
+  if submitted:
+    
+    stock_a = stock + ".NS"
+    pass
+    
+  
   
     
     st.header("Part1: Critical Asset Pricing Model")
@@ -164,8 +161,7 @@ with st.form(key='Input Assset Info'):
         st.subheader('1B. CAPM Plot: Daily')
         CAPM_daily(stock_a, stock_m)
 
-st.write('------------------------------------------------------------------')
-# Part II #####################################################################
+st.subheader('Part II')
 ticker = yf.Ticker(stock_a)
 stock_price = ticker.history(period='1y')['Close'][1]
 # stock_price = stock_price.last()
