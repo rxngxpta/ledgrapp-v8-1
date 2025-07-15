@@ -41,7 +41,7 @@ st.set_page_config(page_title='Ledgr | Optimization Engine', layout="wide")
 direc = os.getcwd()
 # direc = f'{direc}/Documents/Ledgr'
 # bpath = f'{direc}/pages'
-logofile = f'{direc}/pages/appdata/imgs/Ledgr_Logo_F2.png'
+logofile = f'{direc}/pages/appdata/imgs/Ledgr_Logo_F3.png'
 
 
 # #########################################
