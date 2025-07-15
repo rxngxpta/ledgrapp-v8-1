@@ -384,7 +384,9 @@ except Exception:
 try:
     dividends = bsheet2.loc['Dividends Payable'][0]
 except Exception:
-    dividends = "Data Unreported"
+    dividends =  bsheet2.loc['Dividends Payable'][1]
+else:
+    st.write("Data Insufficient")
 
 try:
     net_sales = total_rev - cost_of_revenue
