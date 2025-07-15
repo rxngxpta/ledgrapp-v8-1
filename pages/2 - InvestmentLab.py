@@ -67,9 +67,9 @@ url_linkedin = "https://www.linkedin.com/company/ledgrapp/"
 
 ##########################
 with st.sidebar:
-    st.image(logofile)
-    st.write("Efficient investments are the pillars of an Efficient Economy.")
-    st.write("These KPIs, Analyses impact living standards within Ledgr's smaller Market in hand with their Global Counterparts. Ledgr imbues a user's Investment efficacy via tactical information,leading one to various optimal scenarios (allocations, in other words")
+  st.image(logofile)
+  st.write("Efficient investments are the pillars of an Efficient Economy.")
+  st.write("These KPIs, Analyses impact living standards within Ledgr's smaller Market in hand with their Global Counterparts. Ledgr imbues a user's Investment efficacy via tactical information,leading one to various optimal scenarios (allocations, in other words")
 
 
 bc1, bc2 = st.columns(2)
