@@ -46,7 +46,7 @@ logofile = f"{direc}/appdata/imgs/Ledgr_Logo_F2.png"
 # #########################################
 start_date = dt.datetime(2019, 1, 1)
 end_date = dt.datetime.today()
-pathtkr = f"{bpath}/appdata/tickerlist_y.csv"
+pathtkr = f"{direc}/pages/appdata/tickerlist_y.csv"
 ytube = f'{direc}/pages/appdata/imgs/ytube.svg'
 fbook = f'{direc}/pages/appdata/imgs/fbook.svg'
 insta = f'{direc}/pages/appdata/imgs/insta.svg'
@@ -386,7 +386,7 @@ with x4:
     st.write("***SVAR***")
 with x5:
     st.metric("**Option - 5**", returns_df.iloc[-1])
-    st.write("***coVAR***")
+    st.write("***CoVAR***")
 
 st.write("  -------------  ")
 
