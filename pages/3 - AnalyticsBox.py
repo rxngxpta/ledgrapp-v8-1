@@ -29,9 +29,8 @@ import json
 direc = os.getcwd()
 st.set_page_config(page_title='Ledgr | Analytics', layout="wide",
                    initial_sidebar_state="expanded")
-st.html(
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7543848340955227"
-     crossorigin="anonymous"></script>)
+st.html("<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7543848340955227" crossorigin="anonymous"></script>", width="stretch")
+
 # logofile2 = f"{direc}/pages/appdata/imgs/Ledgr_Logo_F1.png"
 
 pathtkr = f"{direc}/pages/appdata/tickerlist_y.csv"
