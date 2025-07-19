@@ -75,6 +75,7 @@ url_fb = "https://www.facebook.com/share/1BnXaYvRzV/"
 url_insta = 'https://www.instagram.com/alphaledgr/'
 url_blog = 'https://www.alphaledgr.com/Blog'
 url_linkedin = "https://www.linkedin.com/company/ledgrapp/"
+choicelist = ["Prophet", "LSTM", "Others"]
 st.write("  ---------------------------------------------------------------  ")
 
 fc1, fc2 = st.columns([2, 3])
@@ -87,6 +88,7 @@ with fc2:
 st.write("    -----------------------------------------------------------    ")
 with st.form("uinputs"):
     stock = st.selectbox("Please Select a Security Symbol", tickerlist)
+    choice = st.selectbox("Select the AI-ML Algorithm", choicelist)
     submitted = st.form_submit_button("Proceed")
     if submitted:
         pass
