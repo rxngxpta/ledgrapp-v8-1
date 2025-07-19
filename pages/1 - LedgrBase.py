@@ -29,8 +29,8 @@ st.set_page_config(page_title='LedgrBase | Your Asset Dossier',
                    layout="wide", initial_sidebar_state="expanded")
 # ##################################################################
 st.html(
-    "<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7543848340955227"
-     crossorigin="anonymous"></script>")
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7543848340955227"
+     crossorigin="anonymous"></script>)
 direc = os.getcwd()
 # st.write(direc)
 # direc = f'{direc}/Documents/Ledgr'
