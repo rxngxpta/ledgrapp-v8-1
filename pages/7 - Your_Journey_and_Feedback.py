@@ -5,7 +5,6 @@ import os
 
 st.set_page_config(page_title='Ledgr | Contact Us', layout="wide",
                    initial_sidebar_state="expanded")
-st.html("<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7543848340955227" crossorigin="anonymous"></script>", width="stretch")
 
 
 direc = os.getcwd()
