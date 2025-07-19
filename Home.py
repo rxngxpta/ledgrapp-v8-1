@@ -13,10 +13,6 @@
 from yaml.loader import SafeLoader
 import os
 import streamlit as st
-# import html
-
-st.html(
-    "<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7543848340955227" crossorigin="anonymous"></script>", width="stretch")
 
 direc = os.getcwd()
 
