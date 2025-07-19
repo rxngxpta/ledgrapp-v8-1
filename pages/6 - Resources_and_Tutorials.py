@@ -22,8 +22,8 @@ from streamlit_pdf_viewer import pdf_viewer
 st.set_page_config(page_title='Ledgr | About & Tutorials', layout="wide",
                    initial_sidebar_state="expanded")
 st.html(
-    "<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7543848340955227"
-     crossorigin="anonymous"></script>")
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7543848340955227"
+     crossorigin="anonymous"></script>)
 direc = os.getcwd()
 logofile = f'{direc}/pages/appdata/imgs/Ledgr_Logo_F2.png'
 
