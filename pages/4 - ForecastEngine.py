@@ -54,7 +54,6 @@ tickerlist = tickerdb["SYMBOL"]
 @st.cache_data
 def getdata(stock):
     stock = stock + ".NS"
-
     BSE = yf.Ticker(f'{stock}')
     df = BSE.history(period='max')
     df = df.dropna() 
@@ -88,18 +87,19 @@ with fc2:
 st.write("    -----------------------------------------------------------    ")
 
 stock = st.selectbox("Please Select a Security Symbol", tickerlist)
-choice = st.selectbox("Select the AI-ML Algorithm", choicelist)
-
-
+#choice = st.selectbox("Select the AI-ML Algorithm", choicelist)
 
 df = getdata(stock)
+df = df.set_index(['Date'])
 df.tail(5)
-ind = df.index
-ind = ind.tz_localize(None)
-open = df['Open']
-hi = df['High']
-lo = df['Low']
-close = df['Close']
+#ind = df.index
+#ind = ind.tz_localize(None)
+#open = df['Open']
+#hi = df['High']
+#lo = df['Low']
+close = df[['Close']].values
+input_data= [ds,close]
+inputs= pd.DataFrame([input_data],columns=['ds','y','transactions'])
 prof_df_close = pd.DataFrame({"ds": ind, "y": close})
 prof_df_close = prof_df_close.set_index(['ds'])
 # st.write(prof_df_close)
