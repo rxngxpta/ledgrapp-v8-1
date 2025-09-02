@@ -86,9 +86,12 @@ with fc2:
     st.video('https://youtu.be/QVGy-AnBR4I?si=Y0gl5QwrR9AoE4ft')
 
 st.write("    -----------------------------------------------------------    ")
-
-stock = st.selectbox("Please Select a Security Symbol", tickerlist)
+with st.form():
+       stock = st.selectbox("Please Select a Security Symbol", tickerlist)
 #choice = st.selectbox("Select the AI-ML Algorithm", choicelist)
+       submitted = st.for_submit_button("Proceed")
+       if submitted:
+              pass
 
 df = getdata(stock)
 df = df.set_index(['Date'])
