@@ -15,7 +15,6 @@ praw
 scikit-learn
 yfinance
 yahoofinancials
-holidays==0.24
 prophet
 nsepy
 mftool
