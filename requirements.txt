@@ -16,7 +16,7 @@ scikit-learn
 yfinance
 yahoofinancials
 holidays==0.24
-prophet==1.1.2
+prophet
 nsepy
 mftool
 PyportfolioOpt
