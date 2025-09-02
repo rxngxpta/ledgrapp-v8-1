@@ -60,6 +60,7 @@ def getdata(stock):
     df = df.dropna() 
     return df
 
+
 # Pagework 1 - Inputs ###################################################
 
 
