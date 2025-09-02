@@ -15,7 +15,8 @@ praw
 scikit-learn
 yfinance
 yahoofinancials
-prophet==1.1.1
+holidays==0.24
+prophet==1.1.2
 nsepy
 mftool
 PyportfolioOpt
