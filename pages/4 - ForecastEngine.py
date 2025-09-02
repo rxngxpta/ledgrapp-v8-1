@@ -19,19 +19,19 @@ import yfinance as yf
 # import matplotlib as plt
 # import seaborn as sns
 from prophet import Prophet
-
+import pandas_datareader as pdr
 from prophet.plot import plot_plotly, plot_components_plotly
 import os
 # Page Setup ##################################################################
-st.set_page_config(page_title='Ledgr | Forecasting Engine',
-                   layout="wide", initial_sidebar_state="expanded")
+#st.#set_page_config(page_title='Ledgr | Forecasting Engine',
+       #            layout="wide", initial_sidebar_state="expanded")
 
-def inject_css():
-    with open("style.css") as f:
-        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+#def inject_css():
+#    with open("style.css") as f:
+ #       st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 
-inject_css()
+#inject_css()
 
 direc = os.getcwd()
 
@@ -56,7 +56,7 @@ tickerlist = tickerdb["SYMBOL"]
 def getdata(stock):
     stock = stock + ".NS"
     BSE = yf.Ticker(f'{stock}')
-    df = BSE.history(period='max')
+    df = pdr.DataReader(stock, data_source='yahoo', start=start_date, end=end_date)
     df = df.dropna() 
     return df
 
