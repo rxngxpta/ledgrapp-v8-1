@@ -56,7 +56,7 @@ tickerlist = tickerdb["SYMBOL"]
 def getdata(stock):
     stock = stock + ".NS"
     BSE = yf.Ticker(f'{stock}')
-    df = pdr.DataReader.data(stock, data_source='yahoo', start=start_date, end=end_date)
+    df = yf.download(stock)
     df = df.dropna() 
     return df
 
