@@ -57,6 +57,7 @@ def getdata(stock):
 
     BSE = yf.Ticker(f'{stock}')
     df = BSE.history(period='max')
+    df = df.dropna() 
     return df
 
 # Pagework 1 - Inputs ###################################################
