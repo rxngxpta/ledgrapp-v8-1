@@ -85,12 +85,10 @@ with fc2:
     st.video('https://youtu.be/QVGy-AnBR4I?si=Y0gl5QwrR9AoE4ft')
 
 st.write("    -----------------------------------------------------------    ")
-with st.form("uinputs"):
-    stock = st.selectbox("Please Select a Security Symbol", tickerlist)
-    choice = st.selectbox("Select the AI-ML Algorithm", choicelist)
-    submitted = st.form_submit_button("Proceed")
-    if submitted:
-        pass
+
+stock = st.selectbox("Please Select a Security Symbol", tickerlist)
+choice = st.selectbox("Select the AI-ML Algorithm", choicelist)
+
 
 
 df = getdata(stock)
