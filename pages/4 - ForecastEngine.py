@@ -92,21 +92,7 @@ stock = st.selectbox("Please Select a Security Symbol", tickerlist)
 #choice = st.selectbox("Select the AI-ML Algorithm", choicelist)
 
 df = getdata(stock)
-df = df.set_index.Date
-df.tail(5)
-ind = df.index
-#ind = ind.tz_localize(None)
-#open = df['Open']
-#hi = df['High']
-#lo = df['Low']
-close = df.Close.values
-prof_df_close = pd.DataFrame({"ds": ind, "y": close})
-prof_df_close = prof_df_close.set_index(['ds'])
-# st.write(prof_df_close)
-prof_df_close = prof_df_close.reset_index()
-st.write(prof_df_close.tail(5))
-# Pagework 2 - Forecasting
-
+df = df.set_index(["Date"], inplace=True)
 m = Prophet()
 
 m.fit(prof_df_close)
