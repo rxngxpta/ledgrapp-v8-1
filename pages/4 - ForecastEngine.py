@@ -56,7 +56,7 @@ tickerlist = tickerdb["SYMBOL"]
 def getdata(stock):
     stock = stock + ".NS"
     BSE = yf.Ticker(f'{stock}')
-    df = yf.download(stock)
+    df = yf.download(stock, auto_adjust=True)
     df = df.dropna() 
     return df
 
@@ -92,11 +92,15 @@ stock = st.selectbox("Please Select a Security Symbol", tickerlist)
 #choice = st.selectbox("Select the AI-ML Algorithm", choicelist)
 
 df = getdata(stock)
-df = df.set_index(["Date"], inplace=True)
+st.write(df.head(5))
+df = df.set_index(["Date"], inplace=True) ########################
+st.write(df.tail(5))
+
+
 m = Prophet()
 
 m.fit(prof_df_close)
-future_year = m.make_future_dataframe(periods=365)
+future_year = m.make_future_dataframe(periods=365) ######### input####
 
 forecast_year = m.predict(future_year)
 fig1 = m.plot(forecast_year)
