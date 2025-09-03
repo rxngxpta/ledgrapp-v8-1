@@ -93,8 +93,8 @@ stock = st.selectbox("Please Select a Security Symbol", tickerlist)
 
 df = getdata(stock)
 st.write(df.head(5))
-df = df.set_index(["Date"], inplace=True) ########################
-st.write(df.tail(5))
+#df = df.set_index(["Date"], inplace=True) ########################
+#st.write(df.tail(5))
 
 
 m = Prophet()
