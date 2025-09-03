@@ -80,23 +80,25 @@ with fc2:
 st.write("    -----------------------------------------------------------    ")
 
 with st.form("uinputs):
-       stock = st.selectbox("Please Select a Security Symbol", tickerlist)
-       submitted = st.form_submit_button("Proceed")
-       if submitted:
-            @st.cache_data
-            def getdata(stock):
-                stock = stock + ".NS"
-                BSE = yf.Ticker(f'{stock}')
-                df = yf.download(stock, auto_adjust=True)
-                df.dropna() 
-                return df
-
-            df = getdata(stock)
+             
+           stock = st.selectbox("Please Select a Security Symbol", tickerlist)
+           submitted = st.form_submit_button("Proceed")
+            if not submitted:
+                st.stop()
+            else:
+                pass
 
 
 
+@st.cache_data
+def getdata(stock):
+    stock = stock + ".NS"
+    BSE = yf.Ticker(f'{stock}')
+    df = yf.download(stock, auto_adjust=True)
+    df.dropna() 
+    return df
 
-    
+ df = getdata(stock)
 #choice = st.selectbox("Select the AI-ML Algorithm", choicelist)
 df = getdata(stock)
 st.write(df.head(5))
