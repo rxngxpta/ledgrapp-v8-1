@@ -87,7 +87,7 @@ with fc2:
     st.video('https://youtu.be/QVGy-AnBR4I?si=Y0gl5QwrR9AoE4ft')
 
 st.write("    -----------------------------------------------------------    ")
-with st.form():
+with st.form("uinputs):
        stock = st.selectbox("Please Select a Security Symbol", tickerlist)
        submitted = st.form_submit_button("Proceed")
        if submitted:
