@@ -90,7 +90,6 @@ st.write("    -----------------------------------------------------------    ")
 
 stock = st.selectbox("Please Select a Security Symbol", tickerlist)
 #choice = st.selectbox("Select the AI-ML Algorithm", choicelist)
-
 df = getdata(stock)
 st.write(df.head(5))
 #df = df.set_index(["Date"], inplace=True) ########################
