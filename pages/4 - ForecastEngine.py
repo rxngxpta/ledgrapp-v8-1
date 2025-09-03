@@ -95,6 +95,17 @@ df = getdata(stock)
 st.write(df.head(5))
 #df = df.set_index(["Date"], inplace=True) ########################
 #st.write(df.tail(5))
+ind = df.index
+ind = ind.tz_localize(None)
+open = df['Open']
+hi = df['High']
+lo = df['Low']
+close = df['Close']
+prof_df_close = pd.DataFrame({"ds": ind, "y": close})
+prof_df_close = prof_df_close.set_index(['ds'])
+# st.write(prof_df_close)
+prof_df_close = prof_df_close.reset_index()
+st.write(prof_df_close.tail(5))
 
 
 m = Prophet()
