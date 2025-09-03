@@ -91,7 +91,12 @@ with st.form("uinputs):
                 df.dropna() 
                 return df
 
+            df = getdata(stock)
 
+
+
+
+    
 #choice = st.selectbox("Select the AI-ML Algorithm", choicelist)
 df = getdata(stock)
 st.write(df.head(5))
@@ -123,8 +128,7 @@ st.plotly_chart(fig1)
 a = plot_plotly(m, forecast_year)
 a.update_xaxes(title="Timeline", visible=True, showticklabels=True)
 a.update_yaxes(title="Predicted Prices (INR)", visible=True)
-a.update_traces(marker_color="green",
-                selector=dict(mode='markers'))
+a.update_traces(marker_color="green", selector=dict(mode='markers'))
 b = plot_components_plotly(m, forecast_year)
 b.update_xaxes(title="Timeline", visible=True, showticklabels=True)
 b.update_yaxes(title="Predicted Prices (INR)", visible=True)
@@ -141,38 +145,36 @@ c.update_layout(legend=dict(
     yanchor="bottom",
     y=1.02,
     xanchor="right", x=1
-))
+ ))
+
+
 k1, k2, k3 = st.columns([4, 3, 4])
 with k1:
-    st.write(" ")
+   st.write(" ")
 with k2:
-    st.subheader("Forecast Plots")
+   st.subheader("Forecast Plots")
 with k3:
-    st.write(" ")
-st.info(
-    """The Real Prices are scattered with the forecast line fit
-    over them.""")
+   st.write(" ")
+st.info("""The Real Prices are scattered with the forecast line fit over them.""")
 st.plotly_chart(a, use_container_width=True)
 with st.expander("Get Forecast Data Here!"):
-    #       st.write(forecast_year.iloc[-150:])
+   #       st.write(forecast_year.iloc[-150:])
     st.write(forecast_year.iloc[-100:])
-st.info(
-    """The Closing Prices and the Predictions are plot identically
-    as linear plots for comparison.""")
+st.info("""The Closing Prices and the Predictions are plot identically as linear plots for comparison.""")
 st.plotly_chart(c, use_container_width=True)
 
 j1, j2, j3 = st.columns([3, 6, 3])
 with j1:
-    st.write(" ")
+   st.write(" ")
 with j2:
-    st.subheader(f"{stock} Price Trajectory")
+   st.subheader(f"{stock} Price Trajectory")
 with j3:
-    st.write(" ")
+   st.write(" ")
 
 st.info(
-    f"""Track the Price Trajectory of {stock} a particular time
-    scale based on historical data, over years,
-    months and weeks""")
+   f"""Track the Price Trajectory of {stock} a particular time
+   scale based on historical data, over years,
+   months and weeks""")
 st.plotly_chart(b, use_container_width=True)
 
 st.write("  ---------------------------------------------------------------  ")
