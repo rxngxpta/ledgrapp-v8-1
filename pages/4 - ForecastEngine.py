@@ -100,13 +100,13 @@ st.write(df.head(5))
 #st.write(df.tail(5))
 ind = df.index
 ind = ind.tz_localize(None)
-open = df['Open']
-hi = df['High']
-lo = df['Low']
-close = df['Close']
+open = df.Open.values
+hi = df.High.values
+lo = df.Low.values
+close = df.Close.values
 prof_df_close = pd.DataFrame({"ds": ind, "y": close})
 prof_df_close = prof_df_close.set_index(['ds'])
-# st.write(prof_df_close)
+st.write(prof_df_close)
 prof_df_close = prof_df_close.reset_index()
 st.write(prof_df_close.tail(5))
 
